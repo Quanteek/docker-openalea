@@ -16,6 +16,10 @@ RUN alea_config
 
 #create user
 RUN useradd -ms /bin/bash user01
-USER user01
 WORKDIR /home/user01
 
+COPY install_packages.R /home/user01/
+RUN Rscript install_packages.R
+USER user01
+RUN echo "library(\"sensitivity\")" > ~/.Rprofile
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/python2.7/dist-packages/lib/
